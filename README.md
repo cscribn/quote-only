@@ -13,7 +13,7 @@ gem install quote-only
 require 'quote-only'
 
 puts CnnMarketQuoteOnly.new({ :symbol => 'dow', :friendly_name => 'Dow', :decimal_places => 0 }).to_s
-puts CnnMarketQuoteOnly.new({ :symbol => 'XBT', :friendly_name => 'Bitcoin', :decimal_places => 0 }).to_s
+puts CnnQuoteOnly.new({ :symbol => 'XBT', :friendly_name => 'Bitcoin', :decimal_places => 0 }).to_s
 puts BloombergQutoeOnly.new({ :symbol => 'USGG10YR:IND', :friendly_name => '10 Year', :decimal_places => 2 }).to_s
 puts ApmexGoldQuoteOnly.new({ :symbol => 'Gold Spot', :friendly_name => 'Gold', :decimal_places => 0 }).to_s
 puts ApmexSilverQuoteOnly.new({ :symbol => 'Silver Spot', :friendly_name => 'Silver', :decimal_places => 0 }).to_s
