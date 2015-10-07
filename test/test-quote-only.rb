@@ -13,7 +13,7 @@ class QuoteOnlyTest < Minitest::Test
 			assert f.quote.is_a? Float
 		end
 
-		f = CnnQuoteOnly.new({ :symbol => 'XBT', :friendly_name => 'Bitcoin', :decimal_places => -2 })
+		f = CnnQuoteOnly.new({ :symbol => 'XBT', :friendly_name => 'Bitcoin', :decimal_places => -1 })
 		puts f
 		assert f.quote.is_a? Float
 
