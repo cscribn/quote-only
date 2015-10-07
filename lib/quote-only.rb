@@ -4,7 +4,7 @@ require 'open-uri'
 
 class QuoteOnly
 	attr_accessor :css, :url, :symbol, :friendly_name, :quote
-	
+
 	def initialize(options)
 		@symbol = options[:symbol]
 		@friendly_name = options[:friendly_name]
@@ -15,9 +15,15 @@ class QuoteOnly
 		page = Nokogiri::HTML(open(@url))
 		@quote = page.css(@css).text.gsub(/[$,]/, '').to_f
 	end
-	
+
 	def to_s
-		quote_rounded = ('%.' + @decimal_places.to_s + 'f') % @quote.round(@decimal_places)
+		decimal_places_string = '0'
+
+		if(@decimal_places > 0)
+			decimal_places_string = @decimal_places.to_s
+		end
+
+		quote_rounded = ('%.' + decimal_places_string + 'f') % @quote.round(@decimal_places)
 		s = @friendly_name + ' (' + @symbol + ') ' + quote_rounded.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse
 	end
 end
@@ -27,6 +33,15 @@ class CnnMarketQuoteOnly < QuoteOnly
 		super(options)
 		@css = 'td.wsod_lastIndex > span'
 		@url = 'http://money.cnn.com/data/markets/' + @symbol + '/'
+		match()
+	end
+end
+
+class CnnQuoteOnly < QuoteOnly
+	def initialize(options)
+		super(options)
+		@css = 'td.wsod_last > span'
+		@url = 'http://money.cnn.com/quote/quote.html?symb=' + @symbol
 		match()
 	end
 end
