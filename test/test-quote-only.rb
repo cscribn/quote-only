@@ -1,5 +1,5 @@
 require 'minitest/autorun'
-require 'quote-only'
+require_relative '../lib/quote-only'
 
 class QuoteOnlyTest < Minitest::Test
 	def test_
@@ -13,10 +13,6 @@ class QuoteOnlyTest < Minitest::Test
 			assert f.quote.is_a? Float
 		end
 
-		f = CnnQuoteOnly.new({ :symbol => 'XBT', :friendly_name => 'Bitcoin', :decimal_places => -1 })
-		puts f
-		assert f.quote.is_a? Float
-
 		f = BloombergQuoteOnly.new({ :symbol => 'USGG10YR:IND', :friendly_name => '10 Year', :decimal_places => 0 })
 		puts f
 		assert f.quote.is_a? Float
@@ -26,6 +22,10 @@ class QuoteOnlyTest < Minitest::Test
 		assert f.quote.is_a? Float
 
 		f = ApmexSilverQuoteOnly.new({ :symbol => 'oz', :friendly_name => 'Silver', :decimal_places => 0 })
+		puts f
+		assert f.quote.is_a? Float
+
+		f = CnnQuoteOnly.new({ :symbol => 'XBT', :friendly_name => 'Bitcoin', :decimal_places => -2 })
 		puts f
 		assert f.quote.is_a? Float
 	end
