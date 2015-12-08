@@ -27,20 +27,20 @@ class QuoteOnly
 	end
 end
 
+class CnnQuoteOnly < QuoteOnly
+	def initialize(options)
+		super(options)
+		@css = 'td.wsod_last > span'
+		@url = 'http://money.cnn.com/quote/quote.html?exHours=off&symb=' + @symbol
+		match()
+	end
+end
+
 class CnnMarketQuoteOnly < QuoteOnly
 	def initialize(options)
 		super(options)
 		@css = 'td.wsod_lastIndex > span'
 		@url = 'http://money.cnn.com/data/markets/' + @symbol + '/'
-		match()
-	end
-end
-
-class CnnQuoteOnly < QuoteOnly
-	def initialize(options)
-		super(options)
-		@css = 'td.wsod_last > span'
-		@url = 'http://money.cnn.com/quote/quote.html?symb=' + @symbol
 		match()
 	end
 end
