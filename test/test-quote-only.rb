@@ -2,31 +2,36 @@ require 'minitest/autorun'
 require_relative '../lib/quote-only'
 
 class QuoteOnlyTest < Minitest::Test
+    def testCnnQuoteOnly(symbol, friendly_name, decimal_places)
+        f = CnnQuoteOnly.new({ :symbol => symbol, :friendly_name => friendly_name, :decimal_places => decimal_places })
+        puts f
+        assert f.quote.is_a? Float     
+    end
+
     def test_
-        cnn_market_tests = []
-        cnn_market_tests.push({ :symbol => 'dow', :friendly_name => 'Dow', :decimal_places => -3 })
-        cnn_market_tests.push({ :symbol => 'sandp', :friendly_name => 'S&P', :decimal_places => -2 })
+        testCnnQuoteOnly('VT', 'World Stocks', 2)
 
-        cnn_market_tests.each do |c|
-            f = CnnMarketQuoteOnly.new(c)
-            puts f
-            assert f.quote.is_a? Float
-        end
-
-        f = BloombergQuoteOnly.new({ :symbol => 'USGG10YR:IND', :friendly_name => '10 Year', :decimal_places => 0 })
+        f = ApmexGoldQuoteOnly.new({ :symbol => 'oz', :friendly_name => 'Gold', :decimal_places => 2 })
         puts f
         assert f.quote.is_a? Float
 
-        f = ApmexGoldQuoteOnly.new({ :symbol => 'oz', :friendly_name => 'Gold', :decimal_places => -2 })
+        f = ApmexSilverQuoteOnly.new({ :symbol => 'oz', :friendly_name => 'Silver', :decimal_places => 2 })
         puts f
-        assert f.quote.is_a? Float
+        assert f.quote.is_a? Float 
+        puts
+        
+        testCnnQuoteOnly('VTI', 'U.S. Stocks', 2)
+        testCnnQuoteOnly('VT', 'Foreign Stocks', 2)
+        testCnnQuoteOnly('SGDM', 'Gold Miners', 2)
+        puts
 
-        f = ApmexSilverQuoteOnly.new({ :symbol => 'oz', :friendly_name => 'Silver', :decimal_places => 0 })
+        testCnnQuoteOnly('VGLT', 'Long-Term Gov', 2)
+        testCnnQuoteOnly('BWZ', 'Foreign Cash', 2) 
+        f = BloombergQuoteOnly.new({ :symbol => 'USGG10YR:IND', :friendly_name => '10 Year', :decimal_places => 2 })
         puts f
         assert f.quote.is_a? Float
+        testCnnQuoteOnly('XBT', 'Bitcoin', 2)
 
-        f = CnnQuoteOnly.new({ :symbol => 'XBT', :friendly_name => 'Bitcoin', :decimal_places => -2 })
-        puts f
-        assert f.quote.is_a? Float
+        puts
     end
 end
